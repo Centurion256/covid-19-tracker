@@ -1,4 +1,15 @@
+body {
+  background-color: rgb(245, 245, 245);
+}
+
 .App {
+  display: grid;
+  grid-template-columns: 1fr minmax(300px, 2fr) 1fr;
+  grid-template-areas:  ". t ."
+                        ". a ."
+                        "b c .";
+  justify-items: stretch;
+  /* align-items: center; */
   text-align: center;
 }
 

@@ -1,0 +1,50 @@
+.input {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1em;
+    justify-items: stretch;
+    height: 3em;
+}
+
+.input input {
+    font-size: larger;
+    font-weight: bold;
+    text-indent: 10px;
+    border-radius: 4px;
+    border: 1px solid gainsboro;
+    outline-color: #00d39a;
+}
+
+.input button {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: #00d39a;
+    border-radius: 4px;
+    border: 1px solid gainsboro;
+    outline-color: gray;
+}
+
+.input button:hover {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    color: #00d39a;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid gainsboro;
+    outline-color: #00d39a;
+}
+
+.error {
+    border: 2px solid red!important;
+    outline: none;
+}
+
+.invalid-input {
+    font-size: small;
+    color: red;
+    text-align: start;
+    align-self: start;
+}
