@@ -1,0 +1,30 @@
+.container {
+    padding: 1em;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-color: whitesmoke;
+    /* border-width: 1px; */
+}
+
+h3 {
+    display: inline;
+    font-weight: normal;
+}
+
+.ranking {
+    display: inline;
+    font-weight: normal;
+    font-size: small;
+    color: #00d39a;
+}
+
+h2 {
+    display: inline;
+    font-weight: bold;
+}
+
+.growth {
+    display: inline;
+    font-weight: lighter;
+    font-size: small;
+}
