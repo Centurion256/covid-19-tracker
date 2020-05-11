@@ -37,8 +37,8 @@
     outline-color: #00d39a;
 }
 
-.error {
-    border: 2px solid red!important;
+.input .error {
+    border: 2px solid red;
     outline: none;
 }
 

@@ -16,7 +16,7 @@
     display: grid;
     grid-template-rows: auto auto;
     align-items: flex-start;
-    justify-items: start;
+    justify-items: stretch;
     text-align: start;
 }
 
@@ -43,11 +43,14 @@ h5 {
     font-size: 40px;
 }
 
+/* .header-container {
+    
+} */
+
 .metric-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 10px;
-    justify-items: center;
-    justify-self: stretch;
+    justify-items: start;
 }
