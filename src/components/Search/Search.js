@@ -12,11 +12,10 @@ export class Search extends React.Component {
         };
     }
 
-    // componentDidMount() {
-    //     this.setState({
-    //         error: false
-    //     });
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.error !== nextState.error; //Otherwise, no need to re-render.
+    }
+    
     handleSubmit = async (event) => {
 
         if (event.type === "click" || event.key === "Enter") {
@@ -40,10 +39,6 @@ export class Search extends React.Component {
             }
         }
     };
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.error !== nextState.error; //Otherwise, no need to re-render.
-    }
 
     handleChange = (event) => {
 

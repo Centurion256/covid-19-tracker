@@ -15,6 +15,7 @@ h3 {
     display: inline;
     font-weight: normal;
     font-size: small;
+    text-align: end;
     color: #00d39a;
 }
 
@@ -27,4 +28,14 @@ h2 {
     display: inline;
     font-weight: lighter;
     font-size: small;
+    text-align: end;
 }
+
+.green {
+    color: #00d39a;
+}
+
+.red {
+    color: red;
+}
+

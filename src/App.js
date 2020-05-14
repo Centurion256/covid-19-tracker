@@ -1,7 +1,8 @@
 import React from 'react';
-import './App.css';
-import { Body, Search } from './components';
+import { Body, Search, Navbar, Ranking } from './components';
 import { getGlobalData } from './API/API.js';
+import { Switch, Route } from 'react-router-dom';
+import './App.css';
 
 class App extends React.Component {
   constructor() {
@@ -34,17 +35,28 @@ class App extends React.Component {
       return null; //Promise not yet resolved, do not render.
     }
     return (
+
       <div className="App">
-        <div className="title">
-          <h1>
-            Covid-19 Tracker
-          </h1>
-        </div>
-        <div className="searchbar">
-          <Search onCountryChange={this.handleChangeCountry} />
-        </div>
-        <div className="pagebody">
-          <Body data={this.state.data} />
+        <Navbar/>
+        <div className="main">        
+          <div className="title">
+            <h1>
+              Covid-19 Tracker
+            </h1>
+          </div>
+          <div className="searchbar">
+            <Search onCountryChange={this.handleChangeCountry} />
+          </div>
+          <div className="pagebody">
+            <Switch>
+              <Route path="/ranking">
+                <Ranking />
+              </Route>
+              <Route path="/">
+                <Body data={this.state.data} />
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
     );

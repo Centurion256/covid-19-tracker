@@ -26,7 +26,7 @@ export class Body extends React.Component {
                 <div>
                     <h5>COUNTRY:</h5>
                     <div>
-                        <img className="flag" src={this.props.data.countryIcon} loading="lazy" />
+                        <img className="flag" src={this.props.data.countryIcon} alt="" />
                         <h2 className="country">{this.props.data["country"]}</h2>
                     </div>
                 </div>
