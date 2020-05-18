@@ -48,6 +48,42 @@ export async function getCountryData(country) {
 
 };
 
+export async function getEachCountryData(country) {
+
+    try {
+
+        const response = await track.countries();
+        // console.log(`Sample response ${response}`);
+        console.log(response);
+        let result = [];
+        for (let entry of response) {
+            if (entry.country.toLowerCase().startsWith(country.toLowerCase())) {
+                result.push({
+                    covidinfo: {
+                        cases: { title: "Total Cases", number: entry.cases, ranking: null, daily: null },
+                        recovered: { title: "Recovered", number: entry.recovered, ranking: null, daily: null },
+                        deaths: { title: "Died", number: entry.deaths, ranking: null, daily: null },
+                        tests: { title: "Tests", number: entry.tests, ranking: null, daily: null }
+                    },
+                    country: entry.country,
+                    countryIcon: entry.countryInfo.flag
+                });
+            }
+        }
+        console.log(result)
+        if (result.length === 0) {
+            throw new Error("No match");
+        }
+        return result;
+
+    } catch (reason) {
+
+        console.log(`The reason is: ${reason}`);
+        return null;
+    }
+};
+
+
 export async function getGlobalData() {
 
     try {

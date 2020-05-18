@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCountryData } from "../../API/API.js";
+import { getCountryData, getEachCountryData } from "../../API/API.js";
 import './Search.css'
 
 export class Search extends React.Component {
@@ -20,8 +20,15 @@ export class Search extends React.Component {
 
         if (event.type === "click" || event.key === "Enter") {
 
-            const country = this.state.value;
-            const result = await getCountryData(country);
+            const country = this.state.value;   
+            let result;
+            if (window.location.pathname === "/ranking") {
+                result = await getEachCountryData(country);
+            } else {
+                result = await getCountryData(country);
+            }
+            console.log(`The location is ${window.location.pathname}`)
+
             console.log(`country ${country} is null ${result == null}`)
             if (result != null) {
                 if (this.state.error) {
