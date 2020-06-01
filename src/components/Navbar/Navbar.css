@@ -1,24 +1,7 @@
-/* .nav-container-old {
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-    justify-items: start;
-    justify-self: start;
-    gap: 10px;
-    padding: 4px;
-    background-color: #00d39a;
-    color: whitesmoke;
-    margin-bottom: 10px;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: large;
-    width: 100%;
-} */
-
 .nav-container {
     background-color: #333;
     overflow: hidden;
-    /* box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 12px -5px rgba(24, 73, 56, 0.46); */
+
 }
 
 .nav-container a {
@@ -54,20 +37,3 @@
     background-color: #00d39a;
     color: white;
 }
-/* 
-a:link {
-    font-family: sans-serif;
-    text-decoration: none;
-    color: whitesmoke;
-}
-
-a:active {
-    background: whitesmoke;
-    color: #00d39a;
-}
-
-.link {
-    font-family: sans-serif;
-    color: whitesmoke;
-
-} */

@@ -1,19 +1,29 @@
-import React from 'react';
-import './Body.css'
-import { Card } from '../Cards/Cards.js';
+import React from "react";
+import { selectClosestMatch } from "../../selectors/selectors";
+import { connect } from "react-redux";
+import { Card } from "../Cards/Cards.js";
+import "./Body.css";
 
-export class Body extends React.Component {
-
-    // fetchCountryData = () => {
-
-    //     this.setState({
-    //         data: getCountryData()
-    //     });
-    // }
+//TODO Rewrite async data handling through redux.
+class Body extends React.Component {
     render() {
+        let countryData;
+        const isGlobal =
+            !("country" in this.props.match.params) ||
+            ["global", "world"].indexOf(this.props.match.params["country"]) >
+                -1;
+        if (!isGlobal) {
+            countryData = this.props.getCountry(
+                this.props.match.params.country
+            );
+        } else {
+            countryData = this.props.getCountry("global");
+        }
+        if (!countryData || JSON.stringify(countryData) === "{}") {
+            console.log("Caught");
+            return null; //Either an empty object or untruthy.
+        }
 
-        console.log("Im here");
-        const isGlobal = !this.props.data["country"];
         let heading;
         if (isGlobal) {
             heading = (
@@ -26,14 +36,13 @@ export class Body extends React.Component {
                 <div>
                     <h5>COUNTRY:</h5>
                     <div>
-                        <img className="flag" src={this.props.data.countryIcon} alt="" />
-                        <h2 className="country">{this.props.data["country"]}</h2>
+                        <img className="flag" src={countryData.countryIcon} alt="" />
+                        <h2 className="country">{countryData.country}</h2>
                     </div>
                 </div>
             );
         }
-        // console.log(`Before returning, this.props.data == ${this.props.data}, this.props.data.country == ${this.props.data["country"]}, this.props.data.cases == ${this.props.data.cases} `)
-        // {console.log(`Trying to get covidinfo, ${JSON.stringify(this.props.data)}; ${JSON.stringify(this.props.data.covidinfo)}`)}
+
         return (
             <div className="page-container">
                 <div className="header-container">
@@ -42,11 +51,23 @@ export class Body extends React.Component {
                 </div>
 
                 <div className="metric-container">
-                    {Object.values(this.props.data.covidinfo).map((entry) =>
-                        <Card key={entry.title} title={entry.title} number={entry.number} ranking={entry.ranking} daily={entry.daily} />
-                    )}
+                    {Object.values(countryData.covidinfo).map((entry) => (
+                        <Card
+                            key={entry.title}
+                            title={entry.title}
+                            number={entry.number}
+                            ranking={entry.ranking}
+                            daily={entry.daily}
+                        />
+                    ))}
                 </div>
             </div>
         );
-    };
-};
+    }
+}
+
+const mapStateToProps = (state) => ({
+    getCountry: (country) => selectClosestMatch(country, state.data),
+});
+
+export default connect(mapStateToProps)(Body);
