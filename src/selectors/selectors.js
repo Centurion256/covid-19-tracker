@@ -1,5 +1,7 @@
+import { createSelector } from 'reselect';
+
 //SELECT country, countryIcon, covidinfo FROM countries WHERE country ILIKE '%countryName%; -- SQL analogy.
-export function selectCountriesLike(countryName, { countries }) {
+export function selectCountriesLike(countryName, countries) {
     countryName = countryName.toLowerCase();
     if (
         countryName === "" ||
@@ -18,10 +20,10 @@ export function selectCountriesLike(countryName, { countries }) {
 
 export function selectClosestMatch(countryName, { countries, global }) {
     
-    if (
+    if (    //two additional checks redundant, but for the sake of brewity/compatibility, they're kept
         countryName === "" ||
         countryName === "global" ||
-        countryName === "world"
+        countryName === "world" 
     ) {
         return global;
     }
@@ -43,3 +45,15 @@ export function selectClosestMatch(countryName, { countries, global }) {
     }
     return match;
 }
+
+export const singleCountrySelector = createSelector(
+    (state, props) => ("country" in props.match.params && ["world", "global"].indexOf(props.match.params.country) <= -1) ? props.match.params.country : "global",
+    (state) => state.data,
+    (country, data) => selectClosestMatch(country, data)
+)
+
+export const similarCountriesSelector = createSelector(
+    (state, props) => ("country" in props.match.params && ["world", "global"].indexOf(props.match.params.country) <= -1) ? props.match.params.country : "global",
+    (state) => state.data.countries,
+    (country, data) => selectCountriesLike(country, data)
+)

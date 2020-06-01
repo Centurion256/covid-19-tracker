@@ -1,28 +1,21 @@
 import React from "react";
 import { Card } from "../Cards/Cards.js";
 import "./Ranking.css";
-import { selectCountriesLike } from "../../selectors/selectors.js";
+import { similarCountriesSelector } from "../../selectors/selectors.js";
 import { connect } from "react-redux";
 import { updateError } from "../../actions/";
 
 class Ranking extends React.Component {
     render() {
-        let selectedCountry;
-        if ("country" in this.props.match.params && ["global", "world"].indexOf(this.props.match.params.country) <= -1) {
-            selectedCountry = this.props.getCountries(
-                this.props.match.params.country
-            );
-        } else {
-            selectedCountry = this.props.getCountries("global");
-        }
-        if (!selectedCountry || JSON.stringify(selectedCountry) === "{}") { 
+        
+        if (!this.props.countries || JSON.stringify(this.props.countries) === "{}") { 
             console.log("Caught");
             return null; //Either an empty object or untruthy.
         }
 
         return (
             <div className="page-container">
-                {selectedCountry.map((entry) => (
+                {this.props.countries.map((entry) => (
                     <div key={entry.country} className="countrylist-item">
                         <div className="title-container">
                             <img
@@ -60,8 +53,8 @@ class Ranking extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    getCountries: (country) => selectCountriesLike(country, state.data),
+const mapStateToProps = (state, props) => ({
+    countries: similarCountriesSelector(state, props)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,5 @@
 import React from "react";
-import { selectClosestMatch } from "../../selectors/selectors";
+import { singleCountrySelector } from "../../selectors/selectors";
 import { connect } from "react-redux";
 import { Card } from "../Cards/Cards.js";
 import "./Body.css";
@@ -10,15 +10,10 @@ class Body extends React.Component {
         let countryData;
         const isGlobal =
             !("country" in this.props.match.params) ||
-            ["global", "world"].indexOf(this.props.match.params["country"]) >
-                -1;
-        if (!isGlobal) {
-            countryData = this.props.getCountry(
-                this.props.match.params.country
-            );
-        } else {
-            countryData = this.props.getCountry("global");
-        }
+            ["global", "world"].indexOf(this.props.match.params["country"]) > -1;
+        
+        countryData = this.props.country; //for backwards compatibility
+
         if (!countryData || JSON.stringify(countryData) === "{}") {
             console.log("Caught");
             return null; //Either an empty object or untruthy.
@@ -66,8 +61,8 @@ class Body extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    getCountry: (country) => selectClosestMatch(country, state.data),
+const mapStateToProps = (state, props) => ({
+    country: singleCountrySelector(state, props) //This allows for memoization of selectors
 });
 
 export default connect(mapStateToProps)(Body);

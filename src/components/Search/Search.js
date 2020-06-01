@@ -11,7 +11,7 @@ class Search extends React.Component {
         return this.props.error !== nextProps.error; //Otherwise, no need to re-render.
     }
 
-    handleSubmit = async (event) => {
+    handleSubmit = (event) => {
         if (event.type === "click" || event.key === "Enter") {
             //Much simpler now with redux!
 
