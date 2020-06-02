@@ -7,7 +7,7 @@ export const Card = (props) => {
         <div className="container">
             <h3> {props.title} </h3> {props.ranking && <span className="ranking">Ranked {props.ranking}</span>}
             <br></br>
-            <h2> {props.number} </h2> {props.daily && <span className="growth"> {props.daily}</span>}
+            <h2> {props.number} </h2> {props.daily && <span className="green growth"> {props.daily}</span>}
         </div>
     );
 };
