@@ -1,6 +1,6 @@
 import React from 'react';
 import { Body, Search, Navbar, Ranking } from './components';
-import { getGlobalData } from './API/API.js';
+import { getGlobalData, getEachCountryData } from './API/API.js';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -8,7 +8,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: null
+      data: null,
+      rating_data: null,
+      path_changed: false
     }
   }
 
@@ -16,28 +18,50 @@ class App extends React.Component {
 
     console.log("Awaited");
     this.setState({
-      data: await getGlobalData() //displays global data by default
-    });
-    console.log("The state has been set");
+          rating_data: await getEachCountryData(""), //displays all countries by default
+          data: await getGlobalData() //displays global data by default
+        });
   }
 
   handleChangeCountry = async (info) => {
 
-    this.setState({
-      data: await info
-    });
+    if (window.location.pathname === "/") {
+      this.setState({
+        data: await info
+      });
+    } else {
+      this.setState({
+        rating_data: await info
+      })
+    }
     console.log("The state has been reset");
   }
 
+  handleStateFlush = async (addr) => {
+    
+    if (addr === "/") {
+      this.setState({
+        data: await getGlobalData()
+      });
+    } else {
+      this.setState({
+        rating_data: await getEachCountryData("")
+      });
+    }
+  
+  }
+  
   render() {
 
-    if (this.state.data === null) {
-      return null; //Promise not yet resolved, do not render.
+    if (this.state.data === null || this.state.rating_data === null) {
+      return null;
     }
+
+
     return (
 
       <div className="App">
-        <Navbar/>
+        <Navbar flushPage={this.handleStateFlush}/>
         <div className="main">        
           <div className="title">
             <h1>
@@ -50,7 +74,7 @@ class App extends React.Component {
           <div className="pagebody">
             <Switch>
               <Route path="/ranking">
-                <Ranking />
+                <Ranking data={this.state.rating_data} />
               </Route>
               <Route path="/">
                 <Body data={this.state.data} />
